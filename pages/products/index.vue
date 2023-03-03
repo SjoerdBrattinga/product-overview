@@ -2,19 +2,16 @@
     <div>
         <h2>Products</h2>
 
-        <div v-for="product in products">
+        <div v-for="product in products" v-if="products" :key="product.ProductID">
             <ProductCard :product="product"/>            
         </div>
     </div>
 </template>
 
-<script setup>
-    const runtimeConfig = useRuntimeConfig()
-    
-    const { data: products } = await useFetch('/assortmentcache/group/281/104/', { 
-        baseURL: runtimeConfig.public.apiBase,
-        query: { api_key: runtimeConfig.public.apiKey }
-    })
+<script setup lang="ts">
+    import { Product } from '~~/types';
+     
+    const { data:products } = await useFetch<Product[]>('/api/products')
 
     console.log(products)
 </script>

@@ -2,12 +2,12 @@
 export default defineNuxtConfig({
     runtimeConfig: {
         // The private keys which are only available server-side
-        //apiKey: '6d3a42a3-6d93-4f98-838d-bcc0ab2307fd'
+        apiKey: process.env.API_KEY
 
         // Keys within public are also exposed client-side
-        public: {
-          apiBase: 'https://api.dekamarkt.nl/v1',
-          apiKey: '6d3a42a3-6d93-4f98-838d-bcc0ab2307fd'
-        }
+        // public: {
+        //   apiBase: 'https://api.dekamarkt.nl/v1',
+        //   apiKey: '6d3a42a3-6d93-4f98-838d-bcc0ab2307fd'
+        // }
       }
 })
