@@ -1,19 +1,40 @@
 <template>
-    <div>
-        <h2>Products</h2>
+    <div>   
+        <div v-if="error">
+            <i>error</i>
+        </div>
 
-        <div v-for="product in products" v-if="products" :key="product.ProductID">
-            <ProductCard :product="product"/>            
+        <div v-if="pending">
+            <i>pending</i>
+        </div>
+
+        <div v-else class="grid grid-cols-4 gap-5">
+            <div v-for="product in products" v-if="products" :key="product.ProductID">
+                <ProductCard :product="product"/>            
+            </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-    import { Product } from '~~/types';
-     
-    const { data:products } = await useFetch<Product[]>('/api/products')
 
-    console.log(products)
+    import { Product, WebSubGroup } from '~~/types';
+     
+    const { data, pending, error } = await useFetch<Product[]>('/api/products')
+    
+    let products: Product[] = [];
+
+    if (data.value){
+        products = data.value;      
+
+        const webSubGroups = [...new Set(products.map(item => item.WebSubGroups))].flat()
+
+        const categories = [...new Set(webSubGroups.map( obj => obj.WebSubGroupID))].map( 
+            id => { return webSubGroups.find(obj => obj.WebSubGroupID === id) } )        
+
+        //console.log(categories)
+    }   
+
 </script>
 
 <style scoped>
