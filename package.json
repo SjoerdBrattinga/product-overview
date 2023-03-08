@@ -9,6 +9,10 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.4.1",
-    "nuxt": "^3.2.3"
+    "nuxt": "^3.2.3",
+    "pinia": "^2.0.33"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.4.7"
   }
 }
