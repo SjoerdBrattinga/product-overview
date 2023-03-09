@@ -1,8 +1,8 @@
 <template>
-  <div class="card">
-    <div class="text-center m-4 truncate">
+  <div v-if="product" class="card">
+    <div class="text-center m-4">
       <NuxtLink :to="`/products/${product.ProductID}`">
-        <p class="font-bold text-gray-500">
+        <p class="font-bold text-gray-500 truncate">
           {{ product.Brand }}
           {{ product.MainDescription }}
           {{ product.SubDescription }}
