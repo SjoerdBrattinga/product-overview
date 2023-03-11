@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-  import { useProductsStore } from '~~/stores/products';
+  import { useProductsStore } from '~~/stores/product';
 
   const { id } = useRoute().params;
   const store = useProductsStore();

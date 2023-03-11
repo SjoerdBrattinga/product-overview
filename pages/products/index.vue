@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-  import { useProductsStore } from '~~/stores/products';
+  import { useProductsStore } from '~~/stores/product';
 
   const store = useProductsStore();
   const { pending, error } = await store.fetchProducts();
