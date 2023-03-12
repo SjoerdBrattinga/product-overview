@@ -7,7 +7,7 @@ export interface ProductCategory {
   products: Product[];
 }
 
-export const useProductsStore = defineStore('products', () => {
+export const useProductStore = defineStore('products', () => {
   const products = ref<Product[]>([]);
   const offers = ref<Product[]>([]);
   const categories = ref<ProductCategory[]>([]);

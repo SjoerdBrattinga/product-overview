@@ -8,10 +8,10 @@
 </template>
 
 <script setup>
-  import { useProductsStore } from '~~/stores/product';
+  import { useProductStore } from '~~/stores/product';
 
   const { id } = useRoute().params;
-  const store = useProductsStore();
+  const store = useProductStore();
   const product = store.getProductById(+id);
 </script>
 
