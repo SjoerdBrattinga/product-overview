@@ -22,6 +22,20 @@ export const useProductStore = defineStore('products', () => {
     return { pending, error };
   };
 
+  function filterProducts(categoryId: number) {
+    const index = categories.value.findIndex(
+      (c) => c.subGroupId === categoryId
+    );
+
+    if (index !== -1) {
+      products.value = categories.value[index].products;
+    }
+  }
+
+  const getProducts = () => {
+    return products.value;
+  };
+
   const getProductById = (id: number) => {
     return products.value.find((p) => p.ProductID === id) as Product;
   };
@@ -77,5 +91,13 @@ export const useProductStore = defineStore('products', () => {
     });
   }
 
-  return { products, categories, fetchProducts, getProductById, loaded };
+  return {
+    products,
+    categories,
+    fetchProducts,
+    getProductById,
+    filterProducts,
+    getProducts,
+    loaded,
+  };
 });

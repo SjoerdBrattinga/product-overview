@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="">
     <div v-if="error" class="center">
       <i>error</i>
     </div>
@@ -8,9 +8,12 @@
       <Icon name="svg-spinners:12-dots-scale-rotate" size="48" />
     </div>
 
-    <div v-else class="grid grid-cols-4 gap-5">
-      <div v-for="product in products" :key="product.ProductID">
-        <ProductCard :product="product" />
+    <div v-else>
+      <ProductFilter />
+      <div class="grid grid-cols-4 gap-5 p-4">
+        <div v-for="product in products" :key="product.ProductID">
+          <ProductCard :product="product" />
+        </div>
       </div>
     </div>
   </div>
@@ -22,7 +25,7 @@
   const store = useProductStore();
 
   const { pending, error } = await store.fetchProducts();
-  const products = store.products;
+  const products = computed(() => store.getProducts());
 </script>
 
 <style scoped>
