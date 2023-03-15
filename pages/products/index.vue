@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div v-if="error">
+    <div v-if="error" class="center">
       <i>error</i>
     </div>
 
-    <div v-if="pending">
-      <i>pending</i>
+    <div v-if="pending" class="center">
+      <Icon name="svg-spinners:12-dots-scale-rotate" size="48" />
     </div>
 
     <div v-else class="grid grid-cols-4 gap-5">
@@ -20,8 +20,15 @@
   import { useProductStore } from '~~/stores/product';
 
   const store = useProductStore();
+
   const { pending, error } = await store.fetchProducts();
   const products = store.products;
 </script>
 
-<style scoped></style>
+<style scoped>
+  .center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>

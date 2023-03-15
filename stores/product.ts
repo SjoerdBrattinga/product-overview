@@ -26,7 +26,15 @@ export const useProductStore = defineStore('products', () => {
     return products.value.find((p) => p.ProductID === id) as Product;
   };
 
+  const loaded = () => {
+    return products.value.length > 0;
+  };
+
   function handleProductData(productData: Product[]) {
+    if (loaded()) {
+      return;
+    }
+
     // all products
     products.value = productData;
 
@@ -69,5 +77,5 @@ export const useProductStore = defineStore('products', () => {
     });
   }
 
-  return { products, categories, fetchProducts, getProductById };
+  return { products, categories, fetchProducts, getProductById, loaded };
 });

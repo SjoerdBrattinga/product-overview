@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="main mx-auto">
     <header class="shadow-sm bg-white">
-      <nav class="container mx-auto p-4 flex justify-between">
-        <NuxtLink :to="`/products`">Alle Producten</NuxtLink>
-        <NuxtLink :to="`/cart`">Winkelwagen</NuxtLink>
+      <nav class="container mx-auto p-4 flex justify-between flex-wrap">
+        <NuxtLink :to="`/products`">Boodschappen</NuxtLink>
+        <NuxtLink :to="`/cart`"><CartIcon /></NuxtLink>
       </nav>
     </header>
 
@@ -12,3 +12,12 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+  .main {
+    max-width: 1200px;
+  }
+  nav {
+    height: 5vh;
+  }
+</style>

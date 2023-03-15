@@ -42,5 +42,9 @@ export const useCartStore = defineStore('cart', () => {
     }
   }
 
-  return { cartItems, addToCart, removeFromCart, getItemQuantity };
+  const totalItems = () => {
+    return cartItems.value.reduce((acc, item) => acc + item.quantity, 0);
+  };
+
+  return { cartItems, totalItems, addToCart, removeFromCart, getItemQuantity };
 });

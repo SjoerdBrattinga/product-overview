@@ -1,11 +1,11 @@
 <template>
   <div v-if="product" class="card">
-    <div class="text-center m-4">
+    <div class="">
       <NuxtLink :to="`/products/${product.ProductID}`">
         <img
           :src="product.ProductPictures[0].Url"
           alt="Product Image"
-          class=""
+          class="product-image"
         />
         <p class="font-bold text-gray-500 truncate">
           {{ product.Brand }}
@@ -33,8 +33,9 @@
 
 <style scoped>
   .product-image {
-    max-height: 100px;
-    max-width: 80%;
+    display: block;
+    max-height: 200px;
+    max-width: 100%;
     margin: 0 auto;
   }
 </style>
