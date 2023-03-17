@@ -11,7 +11,7 @@
     <div v-else>
       <ProductFilter />
       <div class="grid grid-cols-4 gap-5 p-4">
-        <div v-for="product in products" :key="product.ProductID">
+        <div v-for="product in productList" :key="product.ProductID">
           <ProductCard :product="product" />
         </div>
       </div>
@@ -25,7 +25,7 @@
   const store = useProductStore();
 
   const { pending, error } = await store.fetchProducts();
-  const products = computed(() => store.getProducts());
+  const productList = computed(() => store.getProducts().value);
 </script>
 
 <style scoped>
@@ -33,5 +33,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  ProductCard {
+    height: 250px;
+    width: 250px;
   }
 </style>

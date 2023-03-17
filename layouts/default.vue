@@ -2,7 +2,7 @@
   <div class="main mx-auto">
     <header class="shadow-sm bg-white">
       <nav class="container mx-auto p-4 flex justify-between flex-wrap">
-        <NuxtLink :to="`/products`">Boodschappen</NuxtLink>
+        <NuxtLink :to="`/products`"><span>Boodschappen</span></NuxtLink>
         <NuxtLink :to="`/cart`"><CartIcon /></NuxtLink>
       </nav>
     </header>
@@ -17,7 +17,10 @@
   .main {
     max-width: 1200px;
   }
+  span:hover {
+    color: red;
+  }
   nav {
-    height: 5vh;
+    /* height: 5vh; */
   }
 </style>
