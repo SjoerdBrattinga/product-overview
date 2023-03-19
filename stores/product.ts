@@ -1,16 +1,16 @@
 import { defineStore } from 'pinia';
-import { BrandInfo, Product } from '~~/types';
+import { Product } from '~~/types';
 
 export interface ProductCategory {
   subGroupId: number;
   description: string;
-  productList: Product[];
+  productIds: number[];
 }
 
 export interface ProductBrand {
   brandId: number;
   name: string;
-  productList: Product[];
+  productIds: number[];
 }
 
 export const useProductStore = defineStore('products', () => {
@@ -18,7 +18,7 @@ export const useProductStore = defineStore('products', () => {
   const filteredProducts = ref<Product[]>([]);
   const offers = ref<Product[]>([]);
   const categories = ref<ProductCategory[]>([]);
-  const brands = ref<BrandInfo[]>([]);
+  const brands = ref<ProductBrand[]>([]);
 
   const fetchProducts = async () => {
     const { data, pending, error } = await useFetch<Product[]>('/api/products');
@@ -26,38 +26,49 @@ export const useProductStore = defineStore('products', () => {
     if (data.value) {
       handleProductData(data.value);
       filteredProducts.value = products.value;
-      // filterBrands(2046);
     }
 
     return { pending, error };
   };
 
-  function filterProducts(categoryId: number) {
-    // const index = categories.value.findIndex(
-    //   (c) => c.subGroupId === categoryId
-    // );
-
-    // if (index !== -1) {
-    //   filteredProducts.value = categories.value[index].productList;
-    // }
+  function filterCategories(categoryId: number) {
     filteredProducts.value = products.value.filter((p) =>
       p.WebSubGroups.find((group) => group.WebSubGroupID === categoryId)
     );
-    console.log(filteredProducts.value);
   }
 
   function filterBrands(brandId: number) {
     filteredProducts.value = products.value.filter(
       (p) => p.BrandInfo?.BrandID === brandId
     );
-    console.log(filteredProducts.value);
-    // if (index !== -1) {
-    //   filteredProducts.value = categories.value[index].productList;
-    // }
   }
 
   function filterOffers() {
     filteredProducts.value = offers.value;
+  }
+
+  function sortProducts(sortType: string) {
+    if (sortType === 'sortLowHigh') {
+      filteredProducts.value.sort((a, b) => {
+        if (a.ProductPrices[0].Price < b.ProductPrices[0].Price) {
+          return -1;
+        }
+        if (a.ProductPrices[0].Price > b.ProductPrices[0].Price) {
+          return 1;
+        }
+        return 0;
+      });
+    } else if (sortType === 'sortHighLow') {
+      filteredProducts.value.sort((a, b) => {
+        if (a.ProductPrices[0].Price > b.ProductPrices[0].Price) {
+          return -1;
+        }
+        if (a.ProductPrices[0].Price < b.ProductPrices[0].Price) {
+          return 1;
+        }
+        return 0;
+      });
+    }
   }
 
   const getProducts = () => {
@@ -82,24 +93,7 @@ export const useProductStore = defineStore('products', () => {
 
     getCategories();
     getBrands();
-
-    // store products in categories
-    products.value.forEach((product: Product) => {
-      // store in offers
-      if (product.ProductOffers.length > 0) {
-        offers.value.push(product);
-      }
-      // store in categories
-      product.WebSubGroups.forEach((wsg) => {
-        const index = categories.value.findIndex(
-          (c) => c.subGroupId === wsg.WebSubGroupID
-        );
-        if (index !== -1) {
-          categories.value[index].productList.push(product);
-        }
-      });
-      // store in brands
-    });
+    getOffers();
   }
 
   function getBrands() {
@@ -115,7 +109,15 @@ export const useProductStore = defineStore('products', () => {
 
     uniqueBrands.forEach((brand) => {
       if (brand) {
-        brands.value.push(brand);
+        const productIds = products.value
+          .filter((p) => p.BrandInfo?.BrandID === brand.BrandID)
+          .map((p) => p.ProductID);
+
+        brands.value.push({
+          brandId: brand.BrandID,
+          name: brand.Description,
+          productIds,
+        } as ProductBrand);
       }
     });
   }
@@ -136,11 +138,27 @@ export const useProductStore = defineStore('products', () => {
     // store as ProductCategory
     uniqueSubGroups.forEach((group) => {
       if (group) {
+        const productIds = products.value
+          .filter((p) =>
+            p.WebSubGroups?.find(
+              (wsg) => wsg.WebSubGroupID === group.WebSubGroupID
+            )
+          )
+          .map((p) => p.ProductID);
+
         categories.value.push({
           subGroupId: group.WebSubGroupID,
           description: group.Description,
-          productList: [],
+          productIds,
         } as ProductCategory);
+      }
+    });
+  }
+
+  function getOffers() {
+    products.value.forEach((product: Product) => {
+      if (product.ProductOffers.length > 0) {
+        offers.value.push(product);
       }
     });
   }
@@ -153,9 +171,10 @@ export const useProductStore = defineStore('products', () => {
     filteredProducts,
     fetchProducts,
     getProductById,
-    filterProducts,
+    filterCategories,
     filterBrands,
     filterOffers,
+    sortProducts,
     getProducts,
     loaded,
   };

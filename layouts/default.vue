@@ -2,7 +2,7 @@
   <div class="main mx-auto">
     <header class="shadow-sm bg-white">
       <nav class="container mx-auto p-4 flex justify-between flex-wrap">
-        <NuxtLink :to="`/products`"><span>Boodschappen</span></NuxtLink>
+        <NuxtLink :to="`/products`"><span>Winkel</span></NuxtLink>
         <NuxtLink :to="`/cart`"><CartIcon /></NuxtLink>
       </nav>
     </header>
