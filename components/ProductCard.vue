@@ -2,11 +2,13 @@
   <div v-if="product" class="card">
     <div class="">
       <NuxtLink :to="`/products/${product.ProductID}`">
-        <img
-          :src="product.ProductPictures[0].Url"
-          alt="Product Image"
-          class="product-image zoom"
-        />
+        <div class="img-wrap">
+          <img
+            :src="product.ProductPictures[0].Url"
+            alt="Product Image"
+            class="zoom"
+          />
+        </div>
         <p class="font-bold text-gray-500 truncate">
           {{ product.Brand }}
           {{ product.MainDescription }}
@@ -32,25 +34,20 @@
 </script>
 
 <style scoped>
-  .product-image {
-    display: block;
-    /* max-height: 200px; */
+  .img-wrap {
+    overflow: hidden;
+    height: 250px;
     max-width: 100%;
-    margin: 0 auto;
+    margin: 0 auto 0.5rem;
   }
+
   .zoom {
-    /* padding: 50px;
-    
-    transition: transform 0.2s; /* Animation */
-    background-color: inherit;
-    width: 200px;
-    height: 200px;
+    max-height: 250px;
     margin: 0 auto;
+    transition: transform 0.3s ease-out;
   }
 
   .zoom:hover {
-    transform: scale(
-      1.1
-    ); /* (120% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    transform: scale(1.1);
   }
 </style>

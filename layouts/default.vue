@@ -1,13 +1,13 @@
 <template>
   <div class="main mx-auto">
-    <header class="shadow-sm bg-white">
+    <header class="shadow-md bg-white">
       <nav class="container mx-auto p-4 flex justify-between flex-wrap">
-        <NuxtLink :to="`/products`"><span>Winkel</span></NuxtLink>
+        <NuxtLink :to="`/`"><span class="home">Winkel</span></NuxtLink>
         <NuxtLink :to="`/cart`"><CartIcon /></NuxtLink>
       </nav>
     </header>
 
-    <div class="container mx-auto">
+    <div class="content container mx-auto">
       <slot />
     </div>
   </div>
@@ -16,11 +16,18 @@
 <style scoped>
   .main {
     max-width: 1200px;
+    /* position: relative; */
   }
-  span:hover {
+  .home:hover {
     color: red;
   }
-  nav {
-    /* height: 5vh; */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    height: 64px;
   }
+  /* .content {
+    margin-top: 64px;
+  } */
 </style>
