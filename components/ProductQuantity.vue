@@ -1,7 +1,7 @@
 <template>
-  <div class="flex gap-2">
+  <div class="flex flex-row gap-2 justify-end">
     <div v-if="quantity > 0">
-      <button class="btn remove" @click="removeFromCart(productId)">
+      <button class="btn remove" @click="removeFromCart(product.ProductID)">
         <Icon name="fa6-solid:circle-minus" size="30" />
       </button>
     </div>
@@ -9,7 +9,7 @@
       {{ quantity }}
     </div>
     <div>
-      <button class="btn add" @click="addToCart(productId)">
+      <button class="btn add" @click="addToCart(product)">
         <Icon name="fa6-solid:circle-plus" size="30" />
       </button>
     </div>
@@ -26,15 +26,18 @@
 
 <script setup lang="ts">
   import { useCartStore } from '~~/stores/cart';
+  import { Product } from '~~/types';
 
-  const prop = defineProps<{ productId: number }>();
-
+  const prop = defineProps<{ product: Product }>();
   const store = useCartStore();
-  const quantity = computed(() => store.getItemQuantity(prop.productId));
+
+  const quantity = computed(() =>
+    store.getItemQuantity(prop.product.ProductID)
+  );
   // const added = ref(false);
 
-  function addToCart(productId: number) {
-    store.addToCart(productId);
+  function addToCart(product: Product) {
+    store.addToCart(product);
     //  added.value = true;
     // setTimeout(() => (added.value = false), 10000);
   }

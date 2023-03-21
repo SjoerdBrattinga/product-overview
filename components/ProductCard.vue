@@ -18,11 +18,11 @@
       </NuxtLink>
     </div>
 
-    <div class="container mx-auto p-4 flex justify-between">
-      <p class="font-bold text-gray-500 text-center">
+    <div class="flex justify-between container mx-auto mt-4">
+      <p class="font-bold text-lg text-gray-500 text-center">
         {{ product.ProductPrices[0].Price }}
       </p>
-      <ProductQuantity :product-id="product.ProductID" />
+      <ProductQuantity :product="product" />
     </div>
   </div>
 </template>
