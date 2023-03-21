@@ -93,10 +93,14 @@
     flex-direction: row;
     flex-wrap: wrap;
   }
+  select,
+  a {
+    width: 200px;
+    min-width: 100px;
+  }
   li {
     border: 1px solid black;
   }
-
   .btn {
     display: block;
   }

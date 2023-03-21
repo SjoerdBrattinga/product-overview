@@ -30,16 +30,16 @@
 
   const prop = defineProps<{ product: Product }>();
   const store = useCartStore();
+  // const added = ref(false);
 
   const quantity = computed(() =>
     store.getItemQuantity(prop.product.ProductID)
   );
-  // const added = ref(false);
 
   function addToCart(product: Product) {
     store.addToCart(product);
-    //  added.value = true;
-    // setTimeout(() => (added.value = false), 10000);
+    // added.value = true;
+    // setTimeout(() => (added.value = false), 3000);
   }
 
   function removeFromCart(productId: number) {
@@ -62,7 +62,6 @@
     color: red;
     background-color: inherit;
   }
-
   .product-quantity {
     font-size: larger;
     display: inline-flex;
@@ -70,13 +69,13 @@
     justify-content: center;
     text-align: center;
   }
-  /* .icon-wrap {
-    position: absolute;
-    z-index: 999;
-  } */
+  .icon-wrap {
+    /* position: absolute;
+    z-index: 999; */
+  }
   /* enter transitions */
   .add-enter-from {
-    /* opacity: 1; */
+    /* opacity: 0; */
     /* transform: translate(0); */
   }
   /* .toast-enter-to {
@@ -87,7 +86,7 @@
     /* transition: all 0.3s ease; */
   }
   /* leave transitions */
-  /* .toast-leave-from {
+  /* .add-leave-from {
     opacity: 1;
     transform: translateY(0);
   } */

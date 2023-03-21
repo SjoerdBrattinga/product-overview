@@ -16,7 +16,6 @@
 <style scoped>
   .main {
     max-width: 1200px;
-    /* position: relative; */
   }
   .home:hover {
     color: red;
@@ -27,7 +26,4 @@
     z-index: 1;
     height: 64px;
   }
-  /* .content {
-    margin-top: 64px;
-  } */
 </style>

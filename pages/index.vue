@@ -10,7 +10,7 @@
 
     <div v-else>
       <ProductFilter />
-      <div class="grid grid-cols-4 gap-5 p-4">
+      <div class="product-grid grid">
         <div v-for="product in productList" :key="product.ProductID">
           <ProductCard :product="product" />
         </div>
@@ -34,9 +34,35 @@
     align-items: center;
     justify-content: center;
   }
+  .product-grid {
+    display: grid;
+    gap: 1.25rem;
+    padding: 1rem;
+  }
 
   ProductCard {
     height: 250px;
-    width: 250px;
+    width: 100%;
+  }
+
+  @media (max-width: 350px) {
+    .product-grid {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 600px) {
+    .product-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 800px) {
+    .product-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1000px) {
+    .product-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
   }
 </style>

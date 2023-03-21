@@ -31,6 +31,19 @@ export const useProductStore = defineStore('products', () => {
     return { pending, error };
   };
 
+  function handleProductData(productData: Product[]) {
+    if (loaded()) {
+      return;
+    }
+
+    // all products
+    products.value = productData;
+
+    getCategories();
+    getBrands();
+    getOffers();
+  }
+
   function filterCategories(categoryId: number) {
     filteredProducts.value = products.value.filter((p) =>
       p.WebSubGroups.find((group) => group.WebSubGroupID === categoryId)
@@ -83,45 +96,6 @@ export const useProductStore = defineStore('products', () => {
     return products.value.length > 0;
   };
 
-  function handleProductData(productData: Product[]) {
-    if (loaded()) {
-      return;
-    }
-
-    // all products
-    products.value = productData;
-
-    getCategories();
-    getBrands();
-    getOffers();
-  }
-
-  function getBrands() {
-    const brandObjects = products.value
-      .filter((brand) => !!brand.BrandInfo)
-      .map(({ BrandInfo }) => BrandInfo);
-
-    const uniqueBrands = [
-      ...new Set(brandObjects.map((brandObj) => brandObj.BrandID)),
-    ].map((id) => {
-      return brandObjects.find((brand) => brand.BrandID === id);
-    });
-
-    uniqueBrands.forEach((brand) => {
-      if (brand) {
-        const productIds = products.value
-          .filter((p) => p.BrandInfo?.BrandID === brand.BrandID)
-          .map((p) => p.ProductID);
-
-        brands.value.push({
-          brandId: brand.BrandID,
-          name: brand.Description,
-          productIds,
-        } as ProductBrand);
-      }
-    });
-  }
-
   function getCategories() {
     // find all WebSubGroups
     const webSubGroups = products.value.flatMap(
@@ -151,6 +125,32 @@ export const useProductStore = defineStore('products', () => {
           description: group.Description,
           productIds,
         } as ProductCategory);
+      }
+    });
+  }
+
+  function getBrands() {
+    const brandObjects = products.value
+      .filter((brand) => !!brand.BrandInfo)
+      .map(({ BrandInfo }) => BrandInfo);
+
+    const uniqueBrands = [
+      ...new Set(brandObjects.map((brandObj) => brandObj.BrandID)),
+    ].map((id) => {
+      return brandObjects.find((brand) => brand.BrandID === id);
+    });
+
+    uniqueBrands.forEach((brand) => {
+      if (brand) {
+        const productIds = products.value
+          .filter((p) => p.BrandInfo?.BrandID === brand.BrandID)
+          .map((p) => p.ProductID);
+
+        brands.value.push({
+          brandId: brand.BrandID,
+          name: brand.Description,
+          productIds,
+        } as ProductBrand);
       }
     });
   }
